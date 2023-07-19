@@ -4,19 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('list_app', '0001_initial'),
+        ("list_app", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='task',
-            options={'ordering': ['done', 'created_at']},
+            name="task",
+            options={"ordering": ["done", "created_at"]},
         ),
         migrations.AlterField(
-            model_name='task',
-            name='deadline_date',
+            model_name="task",
+            name="deadline_date",
             field=models.DateTimeField(blank=True),
         ),
     ]

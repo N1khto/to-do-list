@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('list_app', '0004_alter_task_tags'),
+        ("list_app", "0004_alter_task_tags"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='task',
-            options={'ordering': ['done', '-created_at']},
+            name="task",
+            options={"ordering": ["done", "-created_at"]},
         ),
     ]
