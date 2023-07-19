@@ -4,7 +4,7 @@
   <h1>
     To Do list
     <a href="{% url 'list_app:task-create' %}" class="btn btn-primary link-to-page">
-      Create
+      Add
     </a>
   </h1>
 
@@ -12,11 +12,37 @@
   {% if task_list %}
     <ul>
       {% for task in task_list %}
-        <li><h4>{{ task.content }}</h4>
-          <h5>Created at: {{ task.created_at }}</h5>
-          <p>Tags:{{ task.tags }}</p>
-          <hr>
-        </li>
+        <div style="display: inline-block">
+          <h4>{{ task.content }}</h4>
+          {% if not task.done %}
+            <span style="color: red"><b>Not Done</b></span>
+          {% endif %}
+          {% if not task.done %}
+            <a href="{% url 'list_app:done_undo' pk=task.id %}" class="btn btn-success link-to-page">
+              Complete
+            </a>
+          {% else %}
+            <a href="{% url 'list_app:done_undo' pk=task.id %}" class="btn btn-secondary link-to-page">
+              Undo
+            </a>
+          {% endif %}
+        </div>
+
+        <h5>Created at: {{ task.created_at }}</h5>
+        <div>Tags:
+          {% for tag in task.tags.all %}
+            "{{ tag.name }}"
+          {% endfor %}</div>
+        {% if task.deadline_date %}
+          <div><b>Deadline: {{ task.deadline_date }}</b></div>
+        {% endif %}
+        <a href="{% url 'list_app:task-update' pk=task.id %}" class="btn btn-primary link-to-page">
+          Update
+        </a>
+        <a href="{% url 'list_app:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+          Delete
+        </a>
+        <hr>
       {% endfor %}
     </ul>
   {% else %}
