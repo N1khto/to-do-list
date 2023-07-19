@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -11,6 +11,16 @@ class TaskListView(generic.ListView):
     model = Task
     context_object_name = "task_list"
     template_name = "list_app/index.html"
+
+    def post(self, request, pk):
+        task = get_object_or_404(Task, id=pk)
+        if task.done:
+            task.done = False
+            task.save()
+        else:
+            task.done = True
+            task.save()
+        return redirect("list_app:index")
 
 
 class TaskCreateView(generic.CreateView):
@@ -51,14 +61,3 @@ class TagUpdateView(generic.UpdateView):
 class TagDeleteView(generic.DeleteView):
     model = Tag
     success_url = reverse_lazy("list_app:tag-list")
-
-
-def done_undo(request, pk):
-    task = Task.objects.get(id=pk)
-    if task.done:
-        task.done = False
-        task.save()
-    else:
-        task.done = True
-        task.save()
-    return HttpResponseRedirect(reverse_lazy("list_app:index"))

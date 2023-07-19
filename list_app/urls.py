@@ -9,7 +9,6 @@ from list_app.views import (
     TagUpdateView,
     TaskDeleteView,
     TagDeleteView,
-    done_undo,
 )
 
 urlpatterns = [
@@ -31,7 +30,7 @@ urlpatterns = [
     path("tag/<int:pk>/delete/", TagDeleteView.as_view(), name="tag-delete"),
     path(
         "cars/<int:pk>/done_undo/",
-        done_undo,
+        TaskListView.as_view(),
         name="done_undo",
     ),
 ]
