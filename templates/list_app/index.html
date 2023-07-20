@@ -20,7 +20,7 @@
 
           <form action="{% url 'list_app:done_undo' pk=task.id %}" method="post">
             {% csrf_token %}
-            {% if not task.done %}
+            {% if not task.is_done %}
               <button class="btn btn-success link-to-page">Complete</button>
             {% else %}
               <button class="btn btn-secondary link-to-page">Undo</button>

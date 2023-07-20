@@ -14,12 +14,8 @@ class TaskListView(generic.ListView):
 
     def post(self, request, pk):
         task = get_object_or_404(Task, id=pk)
-        if task.done:
-            task.done = False
-            task.save()
-        else:
-            task.done = True
-            task.save()
+        task.is_done = not task.is_done
+        task.save()
         return redirect("list_app:index")
 
 

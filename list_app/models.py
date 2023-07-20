@@ -12,8 +12,8 @@ class Task(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     deadline_date = models.DateTimeField(blank=True, null=True)
-    done = models.BooleanField()
+    is_done = models.BooleanField()
     tags = models.ManyToManyField(Tag, related_name="tasks", blank=True)
 
     class Meta:
-        ordering = ["done", "-created_at"]
+        ordering = ["is_done", "-created_at"]
