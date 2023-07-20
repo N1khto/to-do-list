@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    To Do list
+    <a href="{% url 'list_app:task-create' %}" class="btn btn-primary link-to-page">
+      Add
+    </a>
+  </h1>
+
+
+  {% if task_list %}
+    <ul>
+      {% for task in task_list %}
+        <div style="display: inline-block">
+          <h4>{{ task.content }}</h4>
+          {% if not task.done %}
+            <span style="color: red"><b>Not Done</b></span>
+          {% endif %}
+
+          <form action="{% url 'list_app:done_undo' pk=task.id %}" method="post">
+            {% csrf_token %}
+            {% if not task.is_done %}
+              <button class="btn btn-success link-to-page">Complete</button>
+            {% else %}
+              <button class="btn btn-secondary link-to-page">Undo</button>
+            {% endif %}
+          </form>
+
+        </div>
+
+        <h5>Created at: {{ task.created_at }}</h5>
+        <div>Tags:
+          {% for tag in task.tags.all %}
+            "{{ tag.name }}"
+          {% endfor %}</div>
+        {% if task.deadline_date %}
+          <div><b>Deadline: {{ task.deadline_date }}</b></div>
+        {% endif %}
+        <a href="{% url 'list_app:task-update' pk=task.id %}" class="btn btn-primary link-to-page">
+          Update
+        </a>
+        <a href="{% url 'list_app:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+          Delete
+        </a>
+        <hr>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no tasks</p>
+  {% endif %}
+{% endblock %}
